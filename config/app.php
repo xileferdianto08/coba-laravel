@@ -110,7 +110,7 @@ return [
     */
 
     // DO THIS IF THE APP NEEDS TO SPECIFY THE LOCALE FOR FAKER!!!
-    'faker_locale' => env('FAKER_LOCALE','id_ID'),
+    'faker_locale' => env('FAKER_LOCALE','en_US'),
 
     /*
     |--------------------------------------------------------------------------

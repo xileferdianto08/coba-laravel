@@ -10,8 +10,11 @@ class PostController extends Controller
 {
     public function index() {
         return view('posts', [
-            "title" => "Post",
-            "post" => Post::all()
+            "title" => "All Posts",
+            //"post" => Post::all(),
+
+            //penggunaan with() ini buat mengurangi N+1 problem. ini disebut dngn eager loading, ref https://laravel.com/docs/10.x/eloquent-relationships#eager-loading
+            "posts" => Post::with(['author', 'category'])->latest()->get()
         ]);
     }
 

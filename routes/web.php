@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\PostController;
-use App\Models\Category;
 use App\Models\Post;
+use App\Models\User;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,9 +46,19 @@ Route::get('/categories', function () {
 });
 
 Route::get('/categories/{category:slug}', function(Category $category){
-    return view('category', [
-        'title' => $category->name,
-        'posts' => $category->posts,
+    return view('posts', [
+        'title' => "Post By Category: $category->name",
+        'posts' => $category->posts->load('category', 'author'),
         'category' => $category->name
+    ]);
+});
+
+
+Route::get('/authors/{author:username}', function (User $author) {
+    return view('posts', [
+        'title' => "Post By Author: $author->name",
+        //penggunaan load() sendiri adalah alt nya with() yang sedang menggunakan role binding param. ini disebut dengan lazy eager loading
+        'posts' => $author->posts->load('category', 'author'),
+        // 'category' => $category->name
     ]);
 });
